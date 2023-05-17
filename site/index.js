@@ -7,6 +7,7 @@
     //querySelectorAll => DOM要素の中から条件に当てはまるDOMを取得する。
     const $nav = $tab.querySelectorAll('[data-nav]');
     const $content = $tab.querySelectorAll('[data-content]');
+    const ACTIVE_CLASS = 'is-active';
 
     //初期化
     const init = () => {
@@ -18,7 +19,6 @@
     const handleClick = (e) => {
         //e.preventDefaultは、リンク要素を無効化させることができる
         e.preventDefault();
-        console.log('e!',e);
 
         //クリックされたnavとそのdateを取得
         //targetっていうのはどの要素がクリックされたかっていうDOM要素を取得してくるよというもの
@@ -26,10 +26,16 @@
         //dataset.(属性名)トイレるとデータ属性の値が取得できる。
         const targetVal = $this.dataset.nav;
 
-        console.log('$this',$this);
-
+        //対象外のnav,content全て一旦リセットする。
+        let index = 0;
+        while(index < $nav.length) {
+            $content[index].style.display = 'none';
+            $nav[index].classList.remove(ACTIVE_CLASS);
+            index++;
+        }
         //対象のコンテンツをアクティブ化する
         $tab.querySelectorAll('[data-content= "' + targetVal + '"]')[0].style.display = 'block';
+        $nav[targetVal].classList.add(ACTIVE_CLASS);
     };
 
 
